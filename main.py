@@ -2,7 +2,7 @@ class Element:
     def __init__(self, parent, name, **kwargs):
         self.name = name
         self.attributes = {}
-        for k, v in kwargs:
+        for k, v in kwargs.items():
             self.attributes[k] = v
         self.children = []
         self.parent = parent
