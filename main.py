@@ -11,9 +11,16 @@ class Element:
     def __str__(self):
         return self.toString(0)
     def __repr__(self):
-        return "{" + self.name + str(self.attributes) + " [...] }"
+        if len(self.children) > 0:
+            return "{" + self.name + str(self.attributes) + " [...] }"
+        else:
+            return "{" + self.name + str(self.attributes) + " }"
     def attributeString(self):
+        if len(self.attributes.keys()) == 0:
+            return ""
+
         o = []
+        
         for k, v in self.attributes.items():
             if v is None:
                 o.append(k)
