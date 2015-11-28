@@ -334,5 +334,5 @@ if __name__ == "__main__":
         print("FILE:", f)
         with open(f, mode="rt", encoding="utf-8") as file:
             text = file.read()
-            print(text)
+            print(parse(text))
             print()
