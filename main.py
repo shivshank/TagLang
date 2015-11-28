@@ -40,17 +40,6 @@ class TextNode(Element):
         super().__init__(parent, text, **kwargs)
     def __str__(self):
         return self.toString(0)
-    def __repr__(self):
-        return "{" + self.name + str(self.attributes) + " [...] }"
-    def attributeString(self):
-        o = []
-        for k, v in self.attributes.items():
-            if v is None:
-                o.append(k)
-            else:
-                o.append(k + '="' + v + '"')
-
-        return '(' + ' '.join(o) + ')'
     def toString(self, indent):
         name = repr(self.name)[1:-1]
         o = [indent * '\t' + '<' + name + '>' + self.attributeString()]
