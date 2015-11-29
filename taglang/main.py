@@ -327,21 +327,21 @@ if __name__ == "__main__":
     import glob
     import os.path
     
-    while True:
+    def go():
         print("Enter a file path (glob):")
         path = input("> ")
-        print("Are you sure you want to use (y/n):", path)
-        if input("> ").startswith("y"):
-            break
 
-    files = glob.glob(path)
+        files = glob.glob(path)
 
-    if len(files) == 0:
-        print("No files found.")
+        if len(files) == 0:
+            print("No files found.")
 
-    for f in files:
-        print("FILE:", f)
-        with open(f, mode="rt", encoding="utf-8") as file:
-            text = file.read()
-            print(parse(text))
-            print()
+        for f in files:
+            print("FILE:", f)
+            with open(f, mode="rt", encoding="utf-8") as file:
+                text = file.read()
+                print(parse(text))
+                print()
+
+    while True:
+        go()
