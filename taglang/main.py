@@ -1,3 +1,5 @@
+import json
+
 class Element:
     def __init__(self, parent, name, **kwargs):
         self.name = name
@@ -34,6 +36,19 @@ class Element:
             o.append(child.toString(indent+1))
         
         return '\n'.join(o)
+    def _toJSON(self):
+        d = {
+            "name": self.name,
+            "attributes": self.attributes,
+            "children": []
+        }
+        
+        for child in self.children:
+            d["children"].append(child._toJSON())
+
+        return d
+    def toJSON(self, indent):
+        return json.dumps(self._toJSON(), indent=indent)
 
 class TextNode(Element):
     def __init__(self, parent, text, **kwargs):
@@ -325,7 +340,7 @@ def parse(source, **kwargs):
     
 if __name__ == "__main__":
     import glob
-    import os.path
+    import os, os.path
     
     def go():
         print("Enter a file path (glob):")
@@ -335,13 +350,24 @@ if __name__ == "__main__":
 
         if len(files) == 0:
             print("No files found.")
+            
+        if not os.path.exists("json"):
+            os.makedirs("json")
 
         for f in files:
             print("FILE:", f)
             with open(f, mode="rt", encoding="utf-8") as file:
                 text = file.read()
-                print(parse(text))
-                print()
+            result = parse(text)
+            print(result)
+
+            path = os.path.join("json", os.path.basename(f))
+            path = os.path.splitext(path)[0] + ".json"
+            print("Writing JSON to:", path)
+            with open(path, mode="wt", encoding="utf-8") as file:
+                file.write(result.toJSON(4))
+
+            print()
 
     while True:
         go()
