@@ -4,18 +4,22 @@ var taglang = {
         that.name = name;
         that.attributes = args || {};
         that.children = [];
+        that.parent = null;
+        
         return that;
     },
     load: function(json) {
         var that = this.create(json.name, json.attributes),
-            i;
+            i, child;
             
         if (json.children === undefined) {
             return that;
         }
         
         for (i=0; i < json.children.length; i+=1) {
-            that.children.push(this.load(json.children[i]));
+            child = this.load(json.children[i]);
+            child.parent = that;
+            that.children.push(child);
         }
         return that;
     },
