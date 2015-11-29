@@ -164,11 +164,14 @@ class Parser:
         escaped = False
         text = ""
         while self.current != ">" or escaped:
-            escaped = False
+            if escaped:
+                escaped = False
+
             if self.current == "\\":
                 escaped = True
-            else:
-                text += self.current
+            
+            text += self.current
+
             self.next()
         self.next()
         
@@ -187,6 +190,12 @@ class Parser:
                 else:
                     out.append(i.lstrip())
             text = "\n".join(out)
+            
+        # replace escaped characters with the actual stuff
+        # (make sure to do this after multi line formatting, this stuff is NOT
+        #   whitespace in the source!)
+        for k,v in {"\\t": "\t", "\\n": "\n", "\\>": ">"}.items():
+            text = text.replace(k, v)
 
         return text
     def element(self):
