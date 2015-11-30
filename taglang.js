@@ -1,9 +1,9 @@
 var taglang = {
     create: function(name, args) {
         var that = Object.create(this);
-        that.name = name;
+        that._name = name;
         that.attributes = args || {};
-        that.children = [];
+        that._children = [];
         that.parent = null;
         
         return that;
@@ -19,15 +19,15 @@ var taglang = {
         for (i=0; i < json.children.length; i+=1) {
             child = this.load(json.children[i]);
             child.parent = that;
-            that.children.push(child);
+            that._children.push(child);
         }
         return that;
     },
     value: function(val) {
         if (val === undefined) {
-            return this.name;
+            return this._name;
         }
-        this.name = val;
+        this._name = val;
         return this;
     },
     attrib: function(k, v) {
@@ -38,15 +38,42 @@ var taglang = {
         return this;
     },
     children: function() {
-        return this.children;
+        return this._children;
     },
     child: function(i) {
-        return this.children[i];
+        return this._children[i];
+    },
+    indexOf: function(i) {
+        return this._children.indexOf(i);
+    },
+    next: function() {
+        if (!this.parent) {
+            return null;
+        }
+        var i = this.parent.indexOf(this) + 1;
+        
+        if (i > this.parent.children().length) {
+            return null;
+        }
+        
+        return this.parent.child(i);
+    },
+    prev: function() {
+        if (!this.parent) {
+            return null;
+        }
+        var i = this.parent.indexOf(this) - 1;
+        
+        if (i < 0) {
+            return null;
+        }
+        
+        return this.parent.child(i);
     },
     each: function(cb) {
         var i;
-        for (i=0; i < this.children; i+=1) {
-            if (cb(this.children[i], i, this.children) === false) {
+        for (i=0; i < this._children.length; i+=1) {
+            if (cb(this._children[i], i, this._children) === false) {
                 break;
             }
         }
@@ -67,15 +94,15 @@ var taglang = {
         for(i=0; i < indent; i+=1) {
             leading += "\t";
         }
-        s = [leading + this.name + this.attributeString()];
+        s = [leading + this._name + this.attributeString()];
 
-        for (i=0; i < this.children.length; i+=1) {
-            s.push( this.children[i].toTagLang(indent + 1) );
+        for (i=0; i < this._children.length; i+=1) {
+            s.push( this._children[i].toTagLang(indent + 1) );
         }
         return s.join("\n");
     },
     toString: function() {
-        return "{" + this.name + this.attributes.toString()
-            + "( .. " + this.children.length + " .. )}";
+        return "{" + this._name + this.attributes.toString()
+            + "( .. " + this._children.length + " .. )}";
     }
 }
