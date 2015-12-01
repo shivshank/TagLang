@@ -17,11 +17,11 @@ Here are a parser and associated tooling I'm working on. Both are a work in prog
 
 Basically it's a (very) minimal form of XML or JSON to suit my needs.
 
-It is an extensible language for specifying any kind of document in a heirarichal form that is primarily human readable. It differs from other languages by using minimal syntax (which is increasingly all the rage so I guess it's not different at all! ;D) along with indenation to signal parentage.
+It is an extensible language for specifying any kind of document in a hierarchal form that is primarily human readable. It differs from other languages by using minimal syntax (which is increasingly all the rage so I guess it's not different at all! ;D) along with indentation to signal parentage.
 
 The big advantage of this language is that it is basically XML but super fast to type, easy to read, and has good support for reams and reams of multi-line formatted strings.
 
-If you stumbled accross here and are like "this is awesome!" but you want something tested and with good support, I believe YAML fits a similar bill. I wish you luck. ;)
+If you stumbled across here and are like "this is awesome!" but you want something tested and with good support, I believe YAML fits a similar bill. I wish you luck. ;)
 
 Specification
 -------------
@@ -87,7 +87,7 @@ Take heed because "what about this" is actually three elements who all have the 
 There are also two types of text elements:
 
     text_example
-        <thesingle line keep-all-the-spacing kind>(hello="they can have attributes too")
+        <the single line keep-all-the-spacing kind>(hello="they can have attributes too")
             and children
         <[
             and the really freaky do-some-weird-formatting mumbo-jumbo kind
@@ -117,4 +117,4 @@ Have fun.
 
 Identifiers
 -----------
-I don't know what this means yet, but for now don't do anything crazy: don't start them with numbers, they CAN include dashes or underscores, and nonascii letters are okay. Stray away from other snyax symbols like =, "", '', <>, (), and []
+I don't know what this means yet, but for now don't do anything crazy: don't start them with numbers, they CAN include dashes or underscores, and nonascii letters are okay. Stray away from other syntax symbols like =, "", '', <>, (), and []
