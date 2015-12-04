@@ -100,8 +100,14 @@
         .method( "contains" )   // contains( selector )
                                 //   -> true if contains a child that is matched
                                 //      by selector
-        .method( "isFormat" )   // isFormat( selector )
-                                //   -> true if selector describes the format
+        .method( "append" )     // append a child to this
+        .method( "appendTo" )   // append this to the argument
+        .method( "remove" )     // remove a child
+        .method( "first" )      // get the first child
+        .method( "last" )       // get the last child
+        .method( "select" )     // get the element that matches
+                                // should not be recursive by default, but
+                                //   implementations can offer such an option
     ;
     
 }(window.taglangAPI = window.taglangAPI || {}, window.taglang));
