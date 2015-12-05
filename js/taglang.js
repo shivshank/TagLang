@@ -10,7 +10,7 @@ var taglang = {
         return that;
     },
     load: function(json) {
-        var that = this.create(json.name, json.isTextNode, json.attributes),
+        var that = this.create(json.tag, json.isText, json.attributes),
             i, child;
             
         if (json.children === undefined) {
@@ -19,7 +19,7 @@ var taglang = {
         
         for (i=0; i < json.children.length; i+=1) {
             child = this.load(json.children[i]);
-            child.parent = that;
+            child._parent = that;
             that._children.push(child);
         }
         return that;
@@ -164,7 +164,15 @@ var taglang = {
         this.each(function(i) {
             if (i.matches(selector)) {
                 head = i;
-                return false;
+                return false; // break
+            }
+            // if we made it this far, we still haven't found a node
+            // (the above code will break the loop)
+            if (i.children().length > 0) {
+                head = i.select(selector);
+                if (head !== null) {
+                    return false; // break
+                }
             }
         });
         

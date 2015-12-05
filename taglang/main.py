@@ -38,9 +38,10 @@ class Element:
         return '\n'.join(o)
     def _toJSON(self):
         d = {
-            "name": self.name,
+            "tag": self.name,
             "attributes": self.attributes,
-            "children": []
+            "children": [],
+            "isText": False
         }
         
         for child in self.children:
@@ -62,6 +63,10 @@ class TextNode(Element):
             o.append(child.toString(indent+1))
         
         return '\n'.join(o)
+    def _toJSON(self):
+        d = super()._toJSON()
+        d["isText"] = True
+        return d
 
 class Parser:
     def __init__(self, tokens):

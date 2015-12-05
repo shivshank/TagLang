@@ -105,9 +105,7 @@
         .method( "remove" )     // remove a child
         .method( "first" )      // get the first child
         .method( "last" )       // get the last child
-        .method( "select" )     // get the element that matches
-                                // should not be recursive by default, but
-                                //   implementations can offer such an option
+        .method( "select" )     // get the element that matches selector
     ;
     
 }(window.taglangAPI = window.taglangAPI || {}, window.taglang));
