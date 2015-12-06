@@ -159,24 +159,26 @@ var taglang = {
     },
     select: function(selector) {
         var tokens = this.parseSelector(selector),
-            head = null;
+            result = null,
+            queue = [this],
+            current;
         
-        this.each(function(i) {
-            if (i.matches(selector)) {
-                head = i;
-                return false; // break
+        // breadth first search
+        while (queue.length > 0 && result === null) {
+            current = queue.splice(0, 1)[0];
+            
+            // will match self
+            if (current.matches(selector)) {
+                result = current;
             }
-            // if we made it this far, we still haven't found a node
-            // (the above code will break the loop)
-            if (i.children().length > 0) {
-                head = i.select(selector);
-                if (head !== null) {
-                    return false; // break
-                }
-            }
-        });
+            
+            // add the children
+            current.each(function(i) {
+                queue.push(i);
+            });
+        }
         
-        return head;
+        return result;
     },
     contains: function(selector) {
         return this.select(selector) !== null;

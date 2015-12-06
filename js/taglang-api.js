@@ -106,6 +106,8 @@
         .method( "first" )      // get the first child
         .method( "last" )       // get the last child
         .method( "select" )     // get the element that matches selector
+                                //     this should be a breadth-first search
+                                //     (should this match self?)
     ;
     
 }(window.taglangAPI = window.taglangAPI || {}, window.taglang));
